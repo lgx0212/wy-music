@@ -1,0 +1,38 @@
+<view class="video-container">
+  <view class="header">
+    <image src="/static/images/logo.png"></image>
+    <view class="search">music</view>
+    <image src="/static/images/logo.png"></image>
+  </view>
+  <scroll-view scroll-with-animation="true" scroll-into-view="{{'nav' + navId}}" scroll-x="true" class="nav-scroll" enable-flex="true">
+    <view id="{{'nav' + item.id}}" class="nav-item" wx:for="{{videoList}}" wx:key="id">
+      <view class="nav-text {{navId == item.id?'active':''}}" bindtap="handleNav" id="{{item.id}}">{{item.name}}</view>
+    </view>
+  </scroll-view>
+
+  <scroll-view refresher-triggered="{{isTriggered}}" scroll-y="true" class="video-scroll" refresher-enabled="true" bindrefresherrefresh="handlerefresh" bindscrolltolower="handletolower">
+    <view class="video-item" wx:for="{{videoItemList}}" wx:key="index">
+      <image wx:if="{{!item.showVideo}}" src="{{item.data.coverUrl}}" id="{{index}}" bindtap="playVideo"></image>
+      <video bindplay="handlePlay" id="{{item.data.vid}}" wx:else src="{{item.videoUrl}}"></video>
+      <view class="content">{{item.data.title}}</view>
+
+      <view class="footer">
+        <image class="avatar" src="{{item.data.creator.avatarUrl}}"></image>
+        <text class="nickName">{{item.data.creator.nickname}}</text>
+        <view class="comments_praised">
+          <text class="item">
+            <text class="iconfont icon-buoumaotubiao15"></text>
+            <text class="count">{{item.data.praisedCount}}</text>
+          </text>
+          <text class="item">
+            <text class="iconfont icon-pinglun1"></text>
+            <text class="count">{{item.data.commentCount}}</text>
+          </text>
+          <button open-type="share" class="item btn">
+            <text class="iconfont icon-gengduo"></text>
+          </button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
